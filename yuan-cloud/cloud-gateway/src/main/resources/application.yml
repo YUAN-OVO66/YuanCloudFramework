@@ -1,0 +1,66 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cloud-gateway
+
+  data:
+    redis:
+        host: localhost
+        port: 6379
+
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: true
+    sentinel:
+      datasource:
+        flow-rules:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: DEFAULT_GROUP
+            rule-type: flow
+      transport:
+        dashboard: localhost:8858
+        port: 8719
+      eager: true
+
+    gateway:
+      discovery:
+        locator:
+            enabled: true
+            lower-case-service-id: true
+      routes:
+        # 核心模块
+        - id: cloud-core
+          uri: lb://cloud-core
+          predicates:
+            - Path=/core/**
+
+        # 认证中心
+        - id: cloud-auth
+          uri: lb://cloud-auth
+          predicates:
+            - Path=/auth/**
+
+        # 用户模块
+        - id: cloud-user
+          uri: lb://cloud-user
+          predicates:
+            - Path=/user/**
+
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848
+#        file-extension: yml
+        import-check:
+          enabled: false
+#        shared-configs:
+#          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
