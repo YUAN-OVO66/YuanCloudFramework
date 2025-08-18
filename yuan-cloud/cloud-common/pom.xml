@@ -7,4 +7,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>cloud-common</artifactId>
+
+    <dependencies>
+
+    </dependencies>
 </project>

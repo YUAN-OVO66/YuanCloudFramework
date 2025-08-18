@@ -13,6 +13,8 @@
         <module>cloud-api</module>
         <module>cloud-gateway</module>
         <module>cloud-user</module>
+        <module>cloud-core</module>
+        <module>cloud-auth</module>
     </modules>
     <properties>
         <java.version>17</java.version>
@@ -22,44 +24,28 @@
         <spring-framework.version>6.0.0</spring-framework.version>
         <spring.cloud.version>2022.0.4</spring.cloud.version>
         <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+        <nacos.version>2.4.0</nacos.version>
+        <sentinel.version>1.8.6</sentinel.version>
         <logback.version>1.4.12</logback.version>
         <lombok.version>1.18.30</lombok.version>
+        <satoken.version>1.44.0</satoken.version>
+        <skywalking-logback.version>9.0.0</skywalking-logback.version>
+        <skywalking.version>9.2.0</skywalking.version>
     </properties>
     <dependencies>
 
-        <!-- SpringBoot 依赖配置 -->
+        <!-- nacos -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>${spring-boot.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
 
-        <!-- SpringCloud 微服务 -->
+        <!--sentinel-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring.cloud.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-
-        <!-- SpringCloud Alibaba 微服务 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-            <version>${spring-cloud-alibaba.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-framework-bom</artifactId>
-            <version>${spring-framework.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+            <version>${sentinel.version}</version>
         </dependency>
 
         <!-- 覆盖logback的依赖配置-->
@@ -82,8 +68,89 @@
             <version>${lombok.version}</version>
         </dependency>
 
+        <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
+        <!-- SkyWalking 的日志工具包 -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
+            <version>${skywalking-logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-spring-cloud-gateway-4.x-plugin</artifactId>
+            <version>${skywalking.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yuan</groupId>
+            <artifactId>cloud-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
+
     <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringCloud 微服务 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringCloud Alibaba 微服务 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--        spring框架依赖-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-bom</artifactId>
+                <version>${satoken.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
     </dependencyManagement>
 
     <build>
