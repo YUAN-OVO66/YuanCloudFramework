@@ -5,11 +5,18 @@ spring:
   application:
     name: cloud-user
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sh-cynosdbmysql-grp-qf3gwiu4.sql.tencentcdb.com:22289/cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: GEASS001zero!
+
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        ip: 127.0.0.1
+        username: nacos
+        password: nacos
       config:
         server-addr: 127.0.0.1:8848
         #        file-extension: yml

@@ -10,6 +10,12 @@ spring:
         host: localhost
         port: 6379
 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sh-cynosdbmysql-grp-qf3gwiu4.sql.tencentcdb.com:22289/cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: GEASS001zero!
+
   cloud:
     loadbalancer:
       cache:
@@ -23,7 +29,7 @@ spring:
             groupId: DEFAULT_GROUP
             rule-type: flow
       transport:
-        dashboard: localhost:8858
+        dashboard: 127.0.0.1:8858
         port: 8719
       eager: true
 
@@ -53,14 +59,16 @@ spring:
 
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 127.0.0.1:8848
         username: nacos
         password: nacos
+        register-enabled: true
+        group: DEFAULT_GROUP
       config:
         server-addr: 127.0.0.1:8848
-#        file-extension: yml
+        file-extension: yaml
         import-check:
           enabled: false
-#        shared-configs:
-#          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+
 
