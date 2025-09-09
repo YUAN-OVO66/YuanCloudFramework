@@ -18,10 +18,31 @@ spring:
         ip: 127.0.0.1
       config:
         server-addr: 127.0.0.1:8848
-#        file-extension: yml
+        file-extension: yaml
         import-check:
           enabled: false
+#        shared-configs:
+#          - data-id: cloud_datasource_config_dev.yaml
+#            group: DEFAULT_GROUP
+#            refresh: true
+
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: minio-1 #默认使用的存储平台
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+    minio:
+      - platform: minio-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: SZJg3PM9D8pAQwV4e4iL
+        secret-key: 8Nbulbkp5K5c6j79Ic7uYqHVzlR0npPofDToTnkI
+        end-point: https://cloud-cdn.cloudyuan.cn
+        bucket-name: cloud-test
+        domain: https://cloud-cdn.cloudyuan.cn/${dromara.x-file-storage.minio[0].bucket-name}/ # 访问域名，注意“/”结尾，例如：http://minio.abc.com/abc/
+        base-path: test/ # 基础路径
 
 sentinel:
   port: 8858
   url: 127.0.0.1
+
+
+
